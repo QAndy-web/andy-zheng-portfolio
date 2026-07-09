@@ -37,18 +37,22 @@ pnpm install
 pnpm dev
 ```
 
-## Production Build
+## Static Production Build
 
 ```bash
 npm run build
-npm start
 ```
 
 With pnpm:
 
 ```bash
 pnpm build
-pnpm start
+```
+
+The static site is exported to:
+
+```text
+out
 ```
 
 ## Edit Personal Content
@@ -71,25 +75,39 @@ public/resume.pdf
 
 Replace that file with a new PDF using the same filename. The Resume and Contact pages link to `/resume.pdf`.
 
-## Deploy to Vercel
+## Deploy to Cloudflare Pages
 
-1. Push this project to GitHub.
-2. Go to [https://vercel.com/new](https://vercel.com/new).
-3. Import the GitHub repository.
-4. Keep the framework preset as `Next.js`.
-5. Use the default build command, or set it to:
+This project is configured for static export in `next.config.ts`:
 
-```bash
-npm run build
+```ts
+output: "export"
 ```
 
-6. Leave the output directory empty/default for Next.js.
-7. Click `Deploy`.
-
-After deployment, Vercel will provide a public URL such as:
+Cloudflare Pages build settings:
 
 ```text
-https://your-project-name.vercel.app
+Framework preset: Next.js (Static HTML Export)
+Production branch: main
+Build command: npx next build
+Build output directory: out
+Root directory: /
+```
+
+If Cloudflare detects pnpm from `pnpm-lock.yaml`, `pnpm build` is also a valid build command.
+
+1. Push this project to GitHub.
+2. In Cloudflare, open `Workers & Pages`.
+3. Select `Create application`.
+4. Select the `Pages` tab.
+5. Select `Import an existing Git repository`.
+6. Choose the GitHub repository.
+7. Use the build settings above.
+8. Click `Deploy`.
+
+After deployment, Cloudflare will provide a public URL such as:
+
+```text
+https://andy-zheng-portfolio.pages.dev
 ```
 
 ## Notes
